@@ -1,0 +1,15 @@
+vars:
+  foobar: "hoge"
+
+seeds:
+  - table: "test_table_1"
+    insert:
+      - name: "test 1"
+
+  - table: "link_table_1"
+    insert:
+      - test_table_id: '{{ id "test_table_1" 0 }}'
+        foo: "test 1"
+
+      - test_table_id: '{{ id "test_table_1" 0 }}'
+        foo: '{{ var "foobar" }}'
