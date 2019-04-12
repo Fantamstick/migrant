@@ -4,6 +4,8 @@ import (
 	"database/sql"
 	"fmt"
 	"log"
+	"os"
+	"path"
 	"path/filepath"
 	"strings"
 
@@ -14,6 +16,7 @@ import (
 
 // DatabaseConfig stores information about a target database
 type DatabaseConfig struct {
+	Name    string
 	Driver  string
 	Uri     string
 	Default bool
@@ -53,6 +56,8 @@ func init() {
 
 	command.AddCommand(genCommand)
 	genCommand.Flags().StringVarP(&targetDatabase, "database", "d", "default!", "which database to generate a migration for (or use default db)")
+
+	viper.SetDefault("migrations", "./migrations")
 }
 
 func main() {
@@ -64,17 +69,15 @@ func main() {
 // apply migrations to the database if they are not in the migrations table.
 func up(cmd *cobra.Command, args []string) {
 	mustLoadConfig(configFileName)
-	config := mustFindDatabase(targetDatabase)
-
-	fmt.Printf("%+v", config)
-
-	db, err := sql.Open(config.Driver, config.Uri)
-
-	if err != nil {
-		log.Fatal(err)
-	}
-
+	dbConfig := mustFindDatabase(targetDatabase)
+	db := mustConnectTo(dbConfig)
 	defer db.Close()
+
+	fmt.Printf("%+v", dbConfig)
+
+	migrationsPath := mustFindMigrationsPath(dbConfig)
+
+	fmt.Print(migrationsPath)
 
 	//
 	// migrate.CheckMigrations(db)
@@ -100,19 +103,20 @@ func mustLoadConfig(name string) {
 }
 
 // find the specified database and return the config
-func mustFindDatabase(name string) *DatabaseConfig {
+func mustFindDatabase(name string) DatabaseConfig {
 	if name == "default!" {
 		sm := viper.GetStringMap("databases")
 
-		for k, _ := range sm {
+		for k := range sm {
 			if viper.GetBool("databases." + k + ".default") {
 				c := DatabaseConfig{
+					Name:    k,
 					Driver:  viper.GetString("databases." + k + ".driver"),
 					Uri:     viper.GetString("databases." + k + ".uri"),
 					Default: true,
 				}
 
-				return &c
+				return c
 			}
 		}
 
@@ -124,10 +128,39 @@ func mustFindDatabase(name string) *DatabaseConfig {
 	}
 
 	c := DatabaseConfig{
+		Name:    name,
 		Driver:  viper.GetString("databases." + name + ".driver"),
 		Uri:     viper.GetString("databases." + name + ".uri"),
 		Default: viper.GetBool("databases." + name + ".default"),
 	}
 
-	return &c
+	return c
+}
+
+// connect to the specified db
+func mustConnectTo(config DatabaseConfig) *sql.DB {
+	db, err := sql.Open(config.Driver, config.Uri)
+
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	return db
+}
+
+// find where the migrations go for this database
+func mustFindMigrationsPath(config DatabaseConfig) string {
+	checkPath := path.Join(viper.GetString("migrations"), config.Name)
+
+	info, err := os.Stat(checkPath)
+
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	if !info.IsDir() {
+		log.Fatal("target migrations location is not a folder")
+	}
+
+	return checkPath
 }
