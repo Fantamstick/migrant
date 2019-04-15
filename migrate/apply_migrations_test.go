@@ -36,5 +36,13 @@ func TestApplyMigrations(t *testing.T) {
 
 		_, err = db.Exec("SELECT count(*) FROM test_table_2")
 		assert.Nil(t, err, "test table 2 should have been created")
+
+		res, err := db.Query(`SELECT name FROM migrations WHERE name = '20190102001122'`)
+		assert.Nil(t, err, "should not return an error")
+		var name string
+		res.Next()
+		res.Scan(&name)
+
+		assert.Equal(t, "20190102001122", name, "should record migration in db")
 	})
 }

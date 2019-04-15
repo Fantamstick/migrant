@@ -24,6 +24,12 @@ func ApplyMigrations(db *sql.DB, migrations []MigrationFile) error {
 		if err != nil {
 			return err
 		}
+
+		_, err = db.Exec("INSERT INTO migrations (name) VALUES (?)", migrations[m].Prefix)
+
+		if err != nil {
+			return err
+		}
 	}
 
 	return nil

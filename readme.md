@@ -31,6 +31,30 @@ migrant gen "add pickles to hamburgers"
 Generate a new migration file. You can specify a data base or the default database if none 
 is specified.
 
+### Seed
+
+```bash
+# seed with a specific file
+migrant seed "seeds/dev_only.yaml"
+
+# seed using multiple files
+migrant seed "seeds/always_include.yaml" "seeds/dev_only.yaml"
+```
+
+Seeds the database using values from one or more yaml files. See the section on Seed Files
+below for more information how to write seed files.
+
+### Reset
+
+```bash
+# drop all tables and reapply all migrations
+migrate reset
+```
+
+Drops all tables and reapplies all migrations. This has the obvious consequence that it will
+**destroy all data** so seriously don't do it in production. Not even as a joke.
+
+
 ## Config File
 
 The config file must live in the current directory or `/etc/migrant`. It should look like 

@@ -10,6 +10,7 @@ import (
 
 	"text/template"
 
+	"golang.org/x/crypto/bcrypt"
 	yaml "gopkg.in/yaml.v2"
 )
 
@@ -53,6 +54,13 @@ func ApplySeeds(db *sql.DB, seedFiles []SeedFile) {
 			},
 			"var": func(source string) string {
 				return fmt.Sprint(input.Vars[source])
+			},
+			"bcrypt": func(source string) string {
+				hashed, err := bcrypt.GenerateFromPassword([]byte(source), 10)
+				if err != nil {
+					log.Fatal(err)
+				}
+				return string(hashed)
 			},
 		}
 
