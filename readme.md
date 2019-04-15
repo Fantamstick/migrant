@@ -6,6 +6,17 @@ be in the current directory, or stored in `/etc/migrant/`.
 
 ## Commands
 
+### Gen
+
+```bash
+# generate new migration for default database
+migrant gen "add pickles to hamburgers"
+```
+
+Generate a new migration file. You can specify a data base or the default database if none 
+is specified.
+
+
 ### Up
 
 ```bash
@@ -20,16 +31,6 @@ migrant up -d chorizo -c besto_configo.yaml
 ```
 
 Apply all unapplied migrations to the database.
-
-### Gen
-
-```bash
-# generate new migration for default database
-migrant gen "add pickles to hamburgers"
-```
-
-Generate a new migration file. You can specify a data base or the default database if none 
-is specified.
 
 ### Seed
 
@@ -54,6 +55,15 @@ migrate reset
 Drops all tables and reapplies all migrations. This has the obvious consequence that it will
 **destroy all data** so seriously don't do it in production. Not even as a joke.
 
+### Truncate
+
+```bash
+# truncate all data from database
+migrant truncate
+```
+
+truncates all tables in the database except for the migration table. Just like resetting the 
+database, this **destroys all your data**, obviously, so be careful.
 
 ## Config File
 
@@ -76,7 +86,7 @@ Use a connection string for the uri. The only driver that works right now is mys
 The config file is pretty straight forward. You can set a database as the default by adding
 a `default` key set to true.
 
-For all commands you can `-c config_gile_name.yaml` to specify which config to use.
+For all commands you can `-c config_file_name.yaml` to specify which config to use.
 
 ## Seed Files
 
