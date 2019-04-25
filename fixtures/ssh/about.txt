@@ -1,0 +1,7 @@
+The known hosts file in this directory contains the the hostkey for
+the bastion host that is configured in docker/bastion directory. It is
+used for testing the scenario in which the user tunnels to a server that
+is in the user's list of known hosts.
+
+Do not use this known_hosts file (or any of the keys or containers) for
+anything other than the test suite that is included with migrant.

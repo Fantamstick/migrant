@@ -1,2 +1,4 @@
 migrations
 seeds
+dist
+config.yaml

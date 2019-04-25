@@ -3,9 +3,9 @@ package migrate_test
 import (
 	"database/sql"
 	"log"
-	"migrant/migrate"
 	"testing"
 
+	"bitbucket.org/fantamstick/migrant/migrate"
 	"golang.org/x/crypto/bcrypt"
 
 	"github.com/stretchr/testify/assert"

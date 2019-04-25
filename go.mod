@@ -1,4 +1,4 @@
-module migrant
+module bitbucket.org/fantamstick/migrant
 
 go 1.12
 

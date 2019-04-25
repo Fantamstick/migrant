@@ -1,9 +1,9 @@
 package migrate_test
 
 import (
-	"migrant/migrate"
 	"testing"
 
+	"bitbucket.org/fantamstick/migrant/migrate"
 	"github.com/stretchr/testify/assert"
 )
 

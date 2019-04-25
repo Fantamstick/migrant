@@ -5,7 +5,10 @@ volumes:
 
 services:
 
-  # テスト用のDB：
+  # set up a mysql database container. If support for other databases is added, they should be
+  # added as separate containers.
+  #
+  # This container is used to check mysql functionality.
   userdata:
     image: mysql:5.7.24
     command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
@@ -19,3 +22,28 @@ services:
       - "33061:3306"
     volumes:
       - dbdata:/var/lib/mysql
+
+  # set up a phony bastion. This is a small alpine image with openssh installed. A throwaway key
+  # is provided in the docker/bastion directory, and this key is copied onto the bastion's root
+  # folder, and the public key added to the bastion's known hosts. You should be able to ssh into
+  # this container using the provided key. DO NOT JUST **DO** THIS, PLEASE CHECK THE DOCKERFILE FOR
+  # YOURSELF TO MAKE SURE NOTHING STUPID OR WEIRD IS IN THERE!
+  #
+  # This container exists in order to test the ssh tunneling functionality.
+  bastion:
+    build:
+      context: docker/bastion
+      dockerfile: Dockerfile
+    ports:
+      - "8022:22"
+
+  # set up a very simple remote that runs netcat on port 1234 with an automated OK response. The
+  # bastion will attempt to connect here during tests.
+  #
+  # This container exists in order to test the ssh tunneling functionality.
+  remote:
+    build:
+      context: docker/remote
+      dockerfile: Dockerfile
+    ports:
+      - "12341:1234"

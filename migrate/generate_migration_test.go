@@ -2,11 +2,11 @@ package migrate_test
 
 import (
 	"io/ioutil"
-	"migrant/migrate"
 	"os"
 	"regexp"
 	"testing"
 
+	"bitbucket.org/fantamstick/migrant/migrate"
 	"github.com/stretchr/testify/assert"
 )
 

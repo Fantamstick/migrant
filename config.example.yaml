@@ -4,7 +4,9 @@ databases:
     driver: "mysql"
     uri: "root:secret@tcp(localhost:3306)/hamburgers?charset=utf8&parseTime=True"
     default: true
+
   employee:
     driver: "mysql"
     uri: "root:secret@tcp(localhost:3306)/employee?charset=utf8&parseTime=True"
+
 
