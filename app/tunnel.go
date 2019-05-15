@@ -21,18 +21,6 @@ type Tunnel struct {
 	Config    *ssh.ClientConfig
 }
 
-// TunnelConfig specifies parameters for a Tunnel.
-type TunnelConfig struct {
-	LocalURI                string
-	JumpURI                 string
-	RemoteURI               string
-	Username                string
-	Password                string
-	Identity                string
-	KnownHosts              string
-	InsecureHostKeyChecking bool
-}
-
 // NewTunnel creates a new Tunnel using the supplied config. If there are any problems with the
 // config it will return an error.
 func NewTunnel(c TunnelConfig) (*Tunnel, error) {

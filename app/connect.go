@@ -10,8 +10,11 @@ import (
 // MustConnect will connect to the specified database or log a fatal.
 func MustConnect(config DatabaseConfig) *sql.DB {
 	if config.PortForward {
+		resolveTunnelURIs(&config.TunnelConfig)
 		initPortforwarding(config)
 	}
+
+	resolveDatabaseUri(&config)
 
 	con, err := sql.Open(config.Driver, config.Uri)
 

@@ -107,6 +107,7 @@ func gen(cmd *cobra.Command, args []string) {
 // apply migrations to the database if they are not in the migrations table.
 func up(cmd *cobra.Command, args []string) {
 	MustLoadConfig(configFileName)
+	MustLoadSecrets()
 	dbConfig := MustFindDBConfig(targetDatabase)
 	db := MustConnect(dbConfig)
 	defer db.Close()
@@ -149,6 +150,7 @@ func up(cmd *cobra.Command, args []string) {
 // seed the selected database
 func seed(cmd *cobra.Command, args []string) {
 	MustLoadConfig(configFileName)
+	MustLoadSecrets()
 	dbConfig := MustFindDBConfig(targetDatabase)
 	db := MustConnect(dbConfig)
 	defer db.Close()
@@ -176,6 +178,7 @@ func seed(cmd *cobra.Command, args []string) {
 // destroy all tables in database and reapply all migrations
 func reset(cmd *cobra.Command, args []string) {
 	MustLoadConfig(configFileName)
+	MustLoadSecrets()
 	dbConfig := MustFindDBConfig(targetDatabase)
 
 	db := MustConnect(dbConfig)
@@ -209,6 +212,7 @@ func reset(cmd *cobra.Command, args []string) {
 // truncate all database tables.
 func truncate(cmd *cobra.Command, args []string) {
 	MustLoadConfig(configFileName)
+	MustLoadSecrets()
 	dbConfig := MustFindDBConfig(targetDatabase)
 	db := MustConnect(dbConfig)
 
