@@ -117,6 +117,7 @@ func resolveDatabaseUri(c *DatabaseConfig) {
 	// first try to use any uri value that was injected
 	if c.Uri != "" {
 		c.Uri = NeedSecret(c.Uri)
+		return
 	}
 
 	// otherwise try to make the uri from the components
