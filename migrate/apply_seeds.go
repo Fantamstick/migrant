@@ -7,7 +7,6 @@ import (
 	"io/ioutil"
 	"log"
 	"strings"
-
 	"text/template"
 
 	"golang.org/x/crypto/bcrypt"

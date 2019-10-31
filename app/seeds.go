@@ -4,7 +4,7 @@ import (
 	"log"
 	"os"
 
-	"bitbucket.org/fantamstick/migrant/migrate"
+	"github.com/Fantamstick/migrant/migrate"
 )
 
 // check each path to see if it's a file and return as array of SeedFile objects

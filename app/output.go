@@ -4,8 +4,7 @@ import (
 	"fmt"
 	"strings"
 
-	"bitbucket.org/fantamstick/migrant/migrate"
-
+	"github.com/Fantamstick/migrant/migrate"
 	"github.com/fatih/color"
 )
 

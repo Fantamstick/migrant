@@ -3,9 +3,8 @@ package migrate_test
 import (
 	"testing"
 
+	"github.com/Fantamstick/migrant/migrate"
 	"github.com/stretchr/testify/assert"
-
-	"bitbucket.org/fantamstick/migrant/migrate"
 )
 
 func TestStat(t *testing.T) {

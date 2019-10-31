@@ -4,8 +4,7 @@ import (
 	"net/http"
 	"testing"
 
-	"bitbucket.org/fantamstick/migrant/app"
-
+	"github.com/Fantamstick/migrant/app"
 	"github.com/stretchr/testify/assert"
 )
 

@@ -5,10 +5,9 @@ import (
 	"log"
 	"strconv"
 
-	"bitbucket.org/fantamstick/migrant/input"
-	"bitbucket.org/fantamstick/migrant/migrate"
+	"github.com/Fantamstick/migrant/input"
+	"github.com/Fantamstick/migrant/migrate"
 	"github.com/fatih/color"
-
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 )
@@ -177,6 +176,8 @@ func seed(cmd *cobra.Command, args []string) {
 
 // destroy all tables in database and reapply all migrations
 func reset(cmd *cobra.Command, args []string) {
+	var err error
+
 	MustLoadConfig(configFileName)
 	MustLoadSecrets()
 	dbConfig := MustFindDBConfig(targetDatabase)
@@ -195,10 +196,17 @@ func reset(cmd *cobra.Command, args []string) {
 		return
 	}
 
-	migrate.DropAllTables(db)
+	err = migrate.DropAllTables(db)
+
+	if err != nil {
+		color.Red("Was not able to drop tables before reset - your database is probably in a dire state.")
+		color.Red(fmt.Sprintf("Received error: %s", err.Error()))
+		return
+	}
+
 	migrate.InitMigrationTable(db)
 	migrations := migrate.CheckMigrations(db, migrationsPath)
-	err := migrate.ApplyMigrations(db, migrations)
+	err = migrate.ApplyMigrations(db, migrations)
 
 	if err != nil {
 		color.Red("Was not able to complete migrations - your database is probably in a dire state.")

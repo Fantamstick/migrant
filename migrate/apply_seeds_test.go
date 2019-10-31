@@ -5,10 +5,9 @@ import (
 	"log"
 	"testing"
 
-	"bitbucket.org/fantamstick/migrant/migrate"
-	"golang.org/x/crypto/bcrypt"
-
+	"github.com/Fantamstick/migrant/migrate"
 	"github.com/stretchr/testify/assert"
+	"golang.org/x/crypto/bcrypt"
 )
 
 func TestApplySeeds(t *testing.T) {

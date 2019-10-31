@@ -7,9 +7,8 @@ import (
 	"os"
 	"path"
 
-	"bitbucket.org/fantamstick/migrant/input"
-	"bitbucket.org/fantamstick/migrant/migrate"
-
+	"github.com/Fantamstick/migrant/input"
+	"github.com/Fantamstick/migrant/migrate"
 	"github.com/spf13/viper"
 )
 

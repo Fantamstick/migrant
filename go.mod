@@ -1,4 +1,4 @@
-module bitbucket.org/fantamstick/migrant
+module github.com/Fantamstick/migrant
 
 go 1.12
 
@@ -12,7 +12,7 @@ require (
 	github.com/mattn/go-isatty v0.0.7 // indirect
 	github.com/spf13/cobra v0.0.3
 	github.com/spf13/viper v1.3.2
-	github.com/stretchr/testify v1.3.0
+	github.com/stretchr/testify v1.4.0
 	golang.org/x/crypto v0.0.0-20181203042331-505ab145d0a9
 	google.golang.org/appengine v1.5.0 // indirect
 	gopkg.in/yaml.v2 v2.2.2

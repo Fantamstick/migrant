@@ -1,7 +1,7 @@
 package main
 
 import (
-	"bitbucket.org/fantamstick/migrant/app"
+	"github.com/Fantamstick/migrant/app"
 )
 
 func main() {
